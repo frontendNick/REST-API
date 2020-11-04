@@ -51,4 +51,16 @@ router.post('/', (req, res, next) => {
     return res.json(book)
 })
 
+//  put - обновление данных
+router.put('/:id', ( req, res, next ) => {
+    const booksId = parseInt(req.params.id, 10)
+    const book = books.find(book => book.id === booksId)
+    if (book){
+        book.title = req.body.title
+        book.author = req.body.author
+    }
+    return res.json(book)
+})
+
+
 module.exports = router
