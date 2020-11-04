@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { v4: uuidv4 } = require('uuid');
 
 const books = [
     {
@@ -25,7 +26,6 @@ const books = [
 router.get( '/', ( req, res, next) => {
     res.json(books)
 })
-
 router.get( '/:id', ( req, res, next) => {
     //  понеслась
     const booksId = parseInt(req.params.id, 10)
@@ -37,6 +37,18 @@ router.get( '/:id', ( req, res, next) => {
             status: 'Not found'
         })
     }
+})
+
+//  post - добавление данных
+router.post('/', (req, res, next) => {
+    const book = {
+        title: req.body.title || 'default',
+        author: req.body.author || 'default',
+        //  уникальный айди
+        id: uuidv4()
+    }
+    books.push(book)
+    return res.json(book)
 })
 
 module.exports = router
